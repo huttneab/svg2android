@@ -532,6 +532,7 @@ function printPath(pathData, stylesArray, groupLevel, clipPath) {
 
         generatedOutput += generateAppAttr('vc_fillColor', parseColorToHex(styles["fill"]), groupLevel, "none");
         generatedOutput += generateAppAttr('vc_fillAlpha', styles["fill-opacity"], groupLevel, "1");
+        generatedOutput += generateAppAttr('vc_fillAlpha', styles["fill-opacity"], groupLevel, "1");
         generatedOutput += generateAppAttr('vc_pathData', pathData, groupLevel, null, false);
 
         generatedOutput += generateAttr('pathData', pathData, groupLevel, null, true);
