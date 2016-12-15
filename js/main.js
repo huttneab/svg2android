@@ -531,10 +531,10 @@ function printPath(pathData, stylesArray, groupLevel, clipPath) {
         generatedOutput += generateAttr('strokeLineCap', styles["stroke-linecap"], groupLevel, "butt");
         generatedOutput += generateAttr('pathData', pathData, groupLevel, null, true);
 
-        generatedOutput += generateAppAttr('fillColor', parseColorToHex(styles["fill"]), groupLevel, "none");
-        generatedOutput += generateAppAttr('fillAlpha', styles["fill-opacity"], groupLevel, "1");
-        generatedOutput += generateAppAttr('fillType', styles["fill-rule"], groupLevel, "nonZero");
-        generatedOutput += generateAppAttr('pathData', pathData, groupLevel, null, true);
+        generatedOutput += generateAppAttr('vc_fillColor', parseColorToHex(styles["fill"]), groupLevel, "none");
+        generatedOutput += generateAppAttr('vc_fillAlpha', styles["fill-opacity"], groupLevel, "1");
+        generatedOutput += generateAppAttr('vc_fillType', styles["fill-rule"], groupLevel, "nonZero");
+        generatedOutput += generateAppAttr('vc_pathData', pathData, groupLevel, null, true);
 
 
         pathsParsedCount++;
