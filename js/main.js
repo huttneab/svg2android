@@ -520,6 +520,7 @@ function printPath(pathData, stylesArray, groupLevel, clipPath) {
         generatedOutput += INDENT.repeat(groupLevel + 1) + '<path\n';
         if (toBool(localStorage.useIdAsName)) generatedOutput += generateAttr('name', styles["id"], groupLevel, "");
         generatedOutput += generateAttr('fillColor', parseColorToHex(styles["fill"]), groupLevel, "none");
+
         generatedOutput += generateAttr('fillAlpha', styles["fill-opacity"], groupLevel, "1");
         generatedOutput += generateAttr('fillType', styles["fill-rule"], groupLevel, "nonZero");
         generatedOutput += generateAttr('strokeColor', parseColorToHex(styles["stroke"]), groupLevel, "none");
@@ -529,6 +530,13 @@ function printPath(pathData, stylesArray, groupLevel, clipPath) {
         generatedOutput += generateAttr('strokeMiterLimit', styles["stroke-miterlimit"], groupLevel, "4");
         generatedOutput += generateAttr('strokeLineCap', styles["stroke-linecap"], groupLevel, "butt");
         generatedOutput += generateAttr('pathData', pathData, groupLevel, null, true);
+
+        generatedOutput += generateAppAttr('fillColor', parseColorToHex(styles["fill"]), groupLevel, "none");
+        generatedOutput += generateAppAttr('fillAlpha', styles["fill-opacity"], groupLevel, "1");
+        generatedOutput += generateAppAttr('fillType', styles["fill-rule"], groupLevel, "nonZero");
+        generatedOutput += generateAppAttr('pathData', pathData, groupLevel, null, true);
+
+
         pathsParsedCount++;
     } else {
         clipPathMerged.push(pathData);
@@ -583,12 +591,16 @@ function generateCode(inputXml) {
     //XML Vector start
     generatedOutput = '<?xml version="1.0" encoding="utf-8"?>\n';
     generatedOutput += '<vector xmlns:android="http://schemas.android.com/apk/res/android"';
+    generatedOutput += ' xmlns:app="http://schemas.android.com/apk/res-auto"';
 
     generatedOutput += '\n' + INDENT + 'android:width="{0}dp"\n'.f(width);
     generatedOutput += INDENT + 'android:height="{0}dp"\n'.f(height);
 
     generatedOutput += INDENT + 'android:viewportWidth="{0}"\n'.f(width);
     generatedOutput += INDENT + 'android:viewportHeight="{0}"'.f(height);
+
+     generatedOutput += INDENT + 'app:vc_viewportWidth="{0}"\n'.f(width);
+    generatedOutput += INDENT + 'app:vc_viewportHeight="{0}"'.f(height);
 
     generatedOutput += '>\n\n';
 
@@ -698,10 +710,22 @@ function removeNonNumeric(input) {
 }
 
 
-function generateAttr(name, val, groupLevel, def, end) {
+function generateAppAttr(name, val, groupLevel, def, end) {
     if (typeof val === "undefined" || val == def || val == "null") return "";
 
     var result = INDENT.repeat(groupLevel + 2) + 'android:{0}="{1}"'.f(name, val);
+
+    if (end) {
+        result += ' />';
+    }
+    result += '\n';
+    return result;
+}
+
+function generateAttr(name, val, groupLevel, def, end) {
+    if (typeof val === "undefined" || val == def || val == "null") return "";
+
+    var result = INDENT.repeat(groupLevel + 2) + 'app:{0}="{1}"'.f(name, val);
 
     if (end) {
         result += ' />';
