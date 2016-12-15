@@ -533,7 +533,7 @@ function printPath(pathData, stylesArray, groupLevel, clipPath) {
         generatedOutput += generateAppAttr('vc_fillColor', parseColorToHex(styles["fill"]), groupLevel, "none");
         generatedOutput += generateAppAttr('vc_fillAlpha', styles["fill-opacity"], groupLevel, "1");
         generatedOutput += generateAppAttr('vc_fillType', styles["fill-rule"], groupLevel, "nonZero");
-        generatedOutput += generateAppAttr('vc_pathData', pathData, groupLevel, null, true);
+        generatedOutput += generateAppAttr('vc_pathData', pathData, groupLevel, null, false);
 
         generatedOutput += generateAttr('pathData', pathData, groupLevel, null, true);
 
@@ -710,25 +710,11 @@ function removeNonNumeric(input) {
     return input.replace(/[^0-9.]/g, "");
 }
 
-
-function generateAppAttr(name, val, groupLevel, def, end) {
-    if (typeof val === "undefined" || val == def || val == "null") return "";
-
-    var result = INDENT.repeat(groupLevel + 2) + 'android:{0}="{1}"'.f(name, val);
-
-    if (end) {
-        result += ' />';
-    }
-    result += '\n';
-    return result;
-}
-
 function generateAppAttr(name, val, groupLevel, def, end) {
     if (typeof val === "undefined" || val == def || val == "null") return "";
 
     var result = INDENT.repeat(groupLevel + 2) + 'app:{0}="{1}"'.f(name, val);
 
-    
     result += '\n';
     return result;
 }
@@ -736,7 +722,7 @@ function generateAppAttr(name, val, groupLevel, def, end) {
 function generateAttr(name, val, groupLevel, def, end) {
     if (typeof val === "undefined" || val == def || val == "null") return "";
 
-    var result = INDENT.repeat(groupLevel + 2) + 'app:{0}="{1}"'.f(name, val);
+    var result = INDENT.repeat(groupLevel + 2) + 'android:{0}="{1}"'.f(name, val);
 
     if (end) {
         result += ' />';
