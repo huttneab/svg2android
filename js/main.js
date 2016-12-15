@@ -529,12 +529,13 @@ function printPath(pathData, stylesArray, groupLevel, clipPath) {
         generatedOutput += generateAttr('strokeLineJoin', styles["stroke-linejoin"], groupLevel, "miter");
         generatedOutput += generateAttr('strokeMiterLimit', styles["stroke-miterlimit"], groupLevel, "4");
         generatedOutput += generateAttr('strokeLineCap', styles["stroke-linecap"], groupLevel, "butt");
-        generatedOutput += generateAttr('pathData', pathData, groupLevel, null, true);
 
         generatedOutput += generateAppAttr('vc_fillColor', parseColorToHex(styles["fill"]), groupLevel, "none");
         generatedOutput += generateAppAttr('vc_fillAlpha', styles["fill-opacity"], groupLevel, "1");
         generatedOutput += generateAppAttr('vc_fillType', styles["fill-rule"], groupLevel, "nonZero");
         generatedOutput += generateAppAttr('vc_pathData', pathData, groupLevel, null, true);
+
+        generatedOutput += generateAttr('pathData', pathData, groupLevel, null, true);
 
 
         pathsParsedCount++;
@@ -718,6 +719,16 @@ function generateAppAttr(name, val, groupLevel, def, end) {
     if (end) {
         result += ' />';
     }
+    result += '\n';
+    return result;
+}
+
+function generateAppAttr(name, val, groupLevel, def, end) {
+    if (typeof val === "undefined" || val == def || val == "null") return "";
+
+    var result = INDENT.repeat(groupLevel + 2) + 'app:{0}="{1}"'.f(name, val);
+
+    
     result += '\n';
     return result;
 }
