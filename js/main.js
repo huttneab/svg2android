@@ -530,6 +530,8 @@ function printPath(pathData, stylesArray, groupLevel, clipPath) {
         generatedOutput += generateAttr('strokeMiterLimit', styles["stroke-miterlimit"], groupLevel, "4");
         generatedOutput += generateAttr('strokeLineCap', styles["stroke-linecap"], groupLevel, "butt");
 
+        generatedOutput += generateAppAttr('vc_strokeColor', parseColorToHex(styles["stroke"]), groupLevel, "none");
+        generatedOutput += generateAppAttr('vc_strokeWidth', removeNonNumeric(styles["stroke-width"]), groupLevel, "0");
         generatedOutput += generateAppAttr('vc_fillColor', parseColorToHex(styles["fill"]), groupLevel, "none");
         generatedOutput += generateAppAttr('vc_fillAlpha', styles["fill-opacity"], groupLevel, "1");
         generatedOutput += generateAppAttr('vc_pathData', pathData, groupLevel, null, false);
